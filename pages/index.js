@@ -1,14 +1,25 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import dynamic from 'next/dynamic.js'
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import dynamic from "next/dynamic.js";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
+import React, { useState } from "react";
+import styles from "../components/AblyChatComponent.module.css";
 
-const AblyChatComponent = dynamic(() => import('../components/AblyChatComponent.jsx'), { ssr: false });
-
+const AblyChatComponent = dynamic(
+  () => import("../components/AblyChatComponent.jsx"),
+  { ssr: false }
+);
 
 export default function Home() {
+  const [username, setUsername] = React.useState("");
+  const [submitted, setSubmitted] = React.useState(0);
+
+  const handleFormSubmission = (event) => {
+    event.preventDefault();
+    setSubmitted(1);
+  };
+
   return (
     <>
       <Head>
@@ -19,8 +30,24 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <AblyChatComponent/>
+        <h1>Zerawr Chat</h1>
+
+        { submitted != 1 &&
+          <div>
+            <form onSubmit={handleFormSubmission} className={styles.form}>
+              <textarea
+                value={username}
+                placeholder="Enter username..."
+                onChange={(e) => setUsername(e.target.value)}
+                className={styles.textarea}
+              />
+              <button className={styles.button}>Submit!</button>
+            </form>
+          </div>
+        }
+
+        {submitted != 0 && <AblyChatComponent username={username}/>}
       </main>
     </>
-  )
+  );
 }
