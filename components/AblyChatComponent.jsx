@@ -37,7 +37,7 @@ const AblyChatComponent = ({ username, room }) => {
   const messages = receivedMessages.map((message, index) => {
     const author = message.connectionId === ably.connection.id ? "me" : "other";
     return (
-      <span key={index} className={styles.message} data-author={author}>
+      <span style={ author == "me" ? {backgroundColor: "pink"} : {backgroundColor: "#ADD8E6"} } key={index} className={styles.message} data-author={author}>
         {message.data}
       </span>
     );
