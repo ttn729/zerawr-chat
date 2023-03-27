@@ -13,6 +13,7 @@ const AblyChatComponent = dynamic(
 
 export default function Home() {
   const [username, setUsername] = React.useState("");
+  const [room, setRoom] = React.useState("");
   const [submitted, setSubmitted] = React.useState(0);
 
   const handleFormSubmission = (event) => {
@@ -32,7 +33,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Zerawr Chat</h1>
 
-        { submitted != 1 &&
+        {submitted != 1 && (
           <div>
             <form onSubmit={handleFormSubmission} className={styles.form}>
               <textarea
@@ -41,12 +42,20 @@ export default function Home() {
                 onChange={(e) => setUsername(e.target.value)}
                 className={styles.textarea}
               />
-              <button className={styles.button}>Submit!</button>
+              <br />
+              <textarea
+                value={room}
+                placeholder="Enter room code..."
+                onChange={(e) => setRoom(e.target.value)}
+                className={styles.textarea}
+              />
+              <br />
+              <button className={styles.button} disabled={username == "" || room == ""} >Submit!</button>
             </form>
           </div>
-        }
+        )}
 
-        {submitted != 0 && <AblyChatComponent username={username}/>}
+        {submitted != 0 && <AblyChatComponent username={username} room={room} />}
       </main>
     </>
   );
