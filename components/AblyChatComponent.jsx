@@ -15,6 +15,10 @@ const AblyChatComponent = ({ username, room }) => {
     setMessages([...history, message]);
   });
 
+  useEffect(() => {
+    sendChatMessage(`${username} has joined the room`);
+  }, []);
+
   const sendChatMessage = (messageText) => {
     channel.publish({ name: "chat-message", data: messageText });
     setMessageText("");
